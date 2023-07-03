@@ -1,0 +1,12 @@
+hostname: 124.70.195.38 # 服务器配置信息
+port: 22
+username: root
+password: *********
+
+local-frontend-file-name: dist   # 前端部署文件名
+local-frontend-directory: D:\JAVA Projects\SpringBoot Projects\online-judge\online-judge-frontend\  # 前端项目本地文件夹位置: windows必须以\结尾
+target-frontend-directory: /home/online-judge/frontend/   # 服务器前端项目文件夹位置: linux必须以/结尾 (你必须保证服务器上这个地址存在)
+
+local-backend-jar-name: online-judge-backend-0.0.1-SNAPSHOT.jar  # jar包名
+local-backend-jar-location: D:\JAVA Projects\SpringBoot Projects\online-judge\online-judge-backend\target\  # 本地后端jar包所在文件夹: linux必须以/结尾
+remote-backend-jar-location: /home/online-judge/backend/   # 服务器后端jar包所在文件夹: linux必须以/结尾 (你必须保证服务器上这个地址存在)
