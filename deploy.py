@@ -22,12 +22,12 @@ def upload_folder(sftp, local_path, remote_path):
 
 
 # 部署前端
-def deploy_front_end(ssh, local_frontend_file_name, local_frontend_directory, target_frontend_directory):
+def deploy_front_end(ssh, local_frontend_directory_name, local_frontend_base_directory, target_frontend_base_directory):
     sftp = ssh.open_sftp()
 
-    ssh.exec_command(r'mkdir ' + target_frontend_directory)  # 创建前端文件所在目录
-    ssh.exec_command(r'rm -rf ' + target_frontend_directory + local_frontend_file_name)     # 移除旧前端文件夹
-    upload_folder(sftp, local_frontend_directory + local_frontend_file_name, target_frontend_directory + local_frontend_file_name)  # 上传整个文件夹
+    ssh.exec_command(r'mkdir ' + target_frontend_base_directory)  # 创建前端文件所在目录
+    ssh.exec_command(r'rm -rf ' + target_frontend_base_directory + local_frontend_directory_name)     # 移除旧前端文件夹
+    upload_folder(sftp, local_frontend_base_directory + local_frontend_directory_name, target_frontend_base_directory + local_frontend_directory_name)  # 上传整个文件夹
     stdin, stdout, stderr = ssh.exec_command(r'docker restart nginx')   # 重启Docker的Nginx容器
     if stdout.read().decode() is None:
         print(stderr.read().decode())
@@ -37,19 +37,19 @@ def deploy_front_end(ssh, local_frontend_file_name, local_frontend_directory, ta
 
 
 # 部署后端
-def deploy_back_end(ssh, local_backend_jar_name, local_backend_jar_location, target_backend_jar_location):
+def deploy_back_end(ssh, local_backend_file_name, local_backend_base_directory, target_backend_base_directory):
     sftp = ssh.open_sftp()
 
-    ssh.exec_command(r'mkdir ' + target_backend_jar_location)   # 创建后端文件所在目录
+    ssh.exec_command(r'mkdir ' + target_backend_base_directory)   # 创建后端文件所在目录
     ssh.exec_command(
-        r"kill -9 $(ps -ef | grep '" + local_backend_jar_name + "' | grep -v grep | awk '{print $2}')")  # 停止当前运行的后端进程
-    ssh.exec_command(r'rm -f ' + target_backend_jar_location + local_backend_jar_name)  # 移除后端文件
+        r"kill -9 $(ps -ef | grep '" + local_backend_file_name + "' | grep -v grep | awk '{print $2}')")  # 停止当前运行的后端进程
+    ssh.exec_command(r'rm -f ' + target_backend_base_directory + local_backend_file_name)  # 移除后端文件
 
-    sftp.put(local_backend_jar_location + local_backend_jar_name, target_backend_jar_location + local_backend_jar_name)  # 上传后端单文件
-    stdin, stdout, stderr = ssh.exec_command(r'nohup java -jar ' + target_backend_jar_location + local_backend_jar_name)  # 执行nohup java -jar
+    sftp.put(local_backend_base_directory + local_backend_file_name, target_backend_base_directory + local_backend_file_name)  # 上传后端单文件
+    stdin, stdout, stderr = ssh.exec_command(r'nohup java -jar ' + target_backend_base_directory + local_backend_file_name)  # 执行nohup java -jar
 
     if stderr.read().decode() is not None:
-        print('[运行jar包时发生错误] 请手动在服务器执行:\nnohup java -jar ' + target_backend_jar_location + local_backend_jar_name)
+        print('[运行jar包时发生错误] 请手动在服务器执行:\nnohup java -jar ' + target_backend_base_directory + local_backend_file_name)
         print(stderr.read().decode())
     else:
         print(r'backend deployed successfully')
@@ -82,9 +82,9 @@ if __name__ == '__main__':
         print('请输入: [1] 部署前端 [2] 部署后端 [0] 结束')
         choice = input()
         if choice == '1':
-            deploy_front_end(ssh, config['local-frontend-file-name'], config['local-frontend-directory'], config['target-frontend-directory'])
+            deploy_front_end(ssh, config['local-frontend-directory-name'], config['local-frontend-base-directory'], config['target-frontend-base-directory'])
         if choice == '2':
-            deploy_back_end(ssh, config['local-backend-jar-name'], config['local-backend-jar-location'], config['target-backend-jar-location'])
+            deploy_back_end(ssh, config['local-backend-file-name'], config['local-backend-base-directory'], config['target-backend-base-directory'])
         if choice == '0':
             break
 

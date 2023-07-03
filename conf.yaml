@@ -3,10 +3,10 @@ port: 22  # 服务器SSH端口号
 username: root  # 用户名
 password: ThisIsYourPassWord  # 密码
 
-local-frontend-file-name: dist   # 前端部署文件名
-local-frontend-directory: D:\JAVA Projects\SpringBoot Projects\online-judge\online-judge-frontend\  # 前端项目本地文件夹位置: windows必须以\结尾
-target-frontend-directory: /home/online-judge/frontend/   # 服务器前端项目文件夹位置: linux必须以/结尾 (你必须保证服务器上这个地址的前缀目录存在)
+local-frontend-directory-name: dist   # 前端部署文件名
+local-frontend-base-directory: D:\JAVA Projects\SpringBoot Projects\online-judge\online-judge-frontend\  # 前端项目本地文件夹位置: windows必须以\结尾
+target-frontend-base-directory: /home/online-judge/frontend/   # 服务器前端项目文件夹位置: linux必须以/结尾 (你必须保证服务器上这个地址的前缀目录存在)
 
-local-backend-jar-name: online-judge-backend-0.0.1-SNAPSHOT.jar  # jar包名
-local-backend-jar-location: D:\JAVA Projects\SpringBoot Projects\online-judge\online-judge-backend\target\  # 本地后端jar包所在文件夹: linux必须以/结尾
-target-backend-jar-location: /home/online-judge/backend/   # 服务器后端jar包所在文件夹: linux必须以/结尾 (你必须保证服务器上这个地址的前缀目录存在)
+local-backend-file-name: online-judge-backend-0.0.1-SNAPSHOT.jar  # jar包名
+local-backend-base-directory: D:\JAVA Projects\SpringBoot Projects\online-judge\online-judge-backend\target\  # 本地后端jar包所在文件夹: linux必须以/结尾
+target-backend-base-directory: /home/online-judge/backend/   # 服务器后端jar包所在文件夹: linux必须以/结尾 (你必须保证服务器上这个地址的前缀目录存在)
