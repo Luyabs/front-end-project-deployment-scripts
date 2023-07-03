@@ -2,6 +2,7 @@
 > 适合Vue前端(Docker部署Nginx)+SpringBoot后端(Jar包形式部署)。  
 > 其他文件类型应该也可运行,不过仅可能做数据传输和文件夹清理，没法一键部署。  
 > 如果不使用Docker或Docker中管理此项目的Nginx容器名不为"nginx，则同样需要你手动重启nginx。  
+>  `如果你不是很熟悉手动部署, 建议先了解手动部署, 阅读:` [手动部署指南](https://github.com/Luyabs/front-end-project-deployment-scripts/blob/master/%E6%89%8B%E5%8A%A8%E9%83%A8%E7%BD%B2%E6%8C%87%E5%8D%97.md)
 
 > 原理: 使用ssh执行bash + sftp传输文件    
 > 使用方式:   
